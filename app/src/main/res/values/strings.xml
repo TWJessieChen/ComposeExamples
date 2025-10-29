@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Compose Examples</string>
+    <string name="headline">旅遊靈感推薦</string>
+    <string name="sub_headline">根據季節、主題與預算打造的行程靈感</string>
+    <string name="cta_discover">開始探索</string>
+    <string name="section_seasonal">季節精選</string>
+    <string name="section_local">在地文化</string>
+    <string name="section_food">必吃美食</string>
+    <string name="action_share">分享</string>
+    <string name="action_save">收藏</string>
+</resources>
