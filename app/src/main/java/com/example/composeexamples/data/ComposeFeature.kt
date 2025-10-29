@@ -22,7 +22,7 @@ class ComposeFeatureRepository {
                 "UI 會根據狀態改變自動重新組合 (recomposition)。",
                 "可利用 Preview 迅速檢視每個組件。"
             ),
-            codeHint = "@Composable\nfun Greeting(name: String) {\n    Text(\"Hello $name!\")\n}"
+            codeHint = "@Composable\nfun Greeting(name: String) {\n    Text(\"Hello \$name!\")\n}"
         ),
         ComposeFeature(
             id = "state-hoisting",

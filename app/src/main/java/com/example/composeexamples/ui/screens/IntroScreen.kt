@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.example.composeexamples.data.ComposeFeature
 import com.example.composeexamples.data.ComposeFeatureRepository
 import com.example.composeexamples.ui.theme.ComposeExamplesTheme
+@OptIn(ExperimentalMaterial3Api::class)
 
 @Composable
 fun IntroScreen(
