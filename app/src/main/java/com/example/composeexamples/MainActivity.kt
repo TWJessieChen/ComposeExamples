@@ -1,6 +1,7 @@
 package com.example.composeexamples
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,6 +21,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -30,13 +35,90 @@ import com.example.composeexamples.ui.theme.ComposeExamplesTheme
 import com.example.composeexamples.viewmodel.ComposeFeatureViewModel
 
 class MainActivity : ComponentActivity() {
+    private val TAG = "MainActivity"::class.java.simpleName
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // 1️⃣ 傳統 onCreate() - 最先執行
+        Log.d(TAG, "傳統 onCreate() 執行")
+
+        lifecycle.addObserver(object : LifecycleEventObserver {
+            override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
+                when(event) {
+                    Lifecycle.Event.ON_CREATE -> {
+                        Log.d(TAG, "Activity 已建立")
+                    }
+                    Lifecycle.Event.ON_START -> {
+                        Log.d(TAG, "Activity 開始")
+                        // 啟動資源
+                        setupBackgroundService()
+                    }
+                    Lifecycle.Event.ON_RESUME -> {
+                        Log.d(TAG, "Activity 恢復")
+                    }
+                    Lifecycle.Event.ON_PAUSE -> {
+                        Log.d(TAG, "Activity 暫停")
+                    }
+                    Lifecycle.Event.ON_STOP -> {
+                        Log.d(TAG, "Activity 停止")
+                        // 釋放資源
+                        cleanupBackgroundService()
+                    }
+                    Lifecycle.Event.ON_DESTROY -> {
+                        Log.d(TAG, "Activity 銷毀")
+                    }
+                    else -> {}
+                }
+            }
+        })
+        lifecycle.addObserver(LifecycleLoggingObserver(TAG))
+
         setContent {
             ComposeExamplesTheme {
                 ComposeShowcaseApp()
             }
         }
+
+        Log.d("Lifecycle", "onCreate() 即將結束")
+    }
+
+    private fun setupBackgroundService() {
+        Log.d("Service", "背景服務啟動")
+    }
+
+    private fun cleanupBackgroundService() {
+        Log.d("Service", "背景服務清理")
+    }
+}
+
+// 通用的日誌觀察者
+class LifecycleLoggingObserver(
+    private val tag: String
+) : DefaultLifecycleObserver {
+
+    override fun onCreate(owner: LifecycleOwner) {
+        Log.d(tag, "onCreate")
+    }
+
+    override fun onStart(owner: LifecycleOwner) {
+        Log.d(tag, "onStart")
+    }
+
+    override fun onResume(owner: LifecycleOwner) {
+        Log.d(tag, "onResume")
+    }
+
+    override fun onPause(owner: LifecycleOwner) {
+        Log.d(tag, "onPause")
+    }
+
+    override fun onStop(owner: LifecycleOwner) {
+        Log.d(tag, "onStop")
+    }
+
+    override fun onDestroy(owner: LifecycleOwner) {
+        Log.d(tag, "onDestroy")
     }
 }
 

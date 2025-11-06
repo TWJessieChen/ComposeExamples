@@ -14,8 +14,8 @@ import kotlinx.coroutines.runBlocking
  *
  * 這個文件展示：
  * 1. 為什麼需要轉換（問題場景）
- * 2. stateIn() 的使用（需要當前值）
- * 3. shareIn() 的使用（不需要當前值）
+ * 2. stateIn() 的使用（需要當前值）熱流 (Hot Flow), UI 狀態管理
+ * 3. shareIn() 的使用（不需要當前值）熱流 (Hot Flow), 一次性事件（導航、Toast、錯誤訊息）
  * 4. 常見錯誤和最佳實踐
  */
 
@@ -112,7 +112,7 @@ class StateInExample {
                 started = SharingStarted.WhileSubscribed(5000),
                 initialValue = null // 必須提供初始值
             )
-        // 🔥 現在是 StateFlow（熱流），多個收集者共享同一個流
+        // 🔥 現在是 StateFlow（熱流），多個收集者共享同一個流，UI 狀態管理
     }
 
     /**
